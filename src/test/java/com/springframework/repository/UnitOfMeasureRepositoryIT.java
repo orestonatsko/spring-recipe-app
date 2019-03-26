@@ -19,7 +19,6 @@ public class UnitOfMeasureRepositoryIT {
     @Autowired
     private UnitOfMeasureRepository unitOfMeasureRepository;
 
-
     @Before
     public void setUp() {
 

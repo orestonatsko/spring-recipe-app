@@ -11,15 +11,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class RecipeControllerTest {
 
     @Mock
-    RecipeService recipeService;
+    private RecipeService recipeService;
 
-    RecipeController recipeController;
+    private RecipeController recipeController;
 
     @Before
     public void setUp() throws Exception {
@@ -40,7 +39,8 @@ public class RecipeControllerTest {
 
         mockMvc.perform(get("/recipe/show/" + id))
                 .andExpect(status().isOk())
-                .andExpect(view().name("recipe/show"));
+                .andExpect(view().name("recipe/show"))
+                .andExpect(model().attributeExists("recipe"));
 
     }
 }
