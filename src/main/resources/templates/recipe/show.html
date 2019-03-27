@@ -20,7 +20,7 @@
 <!--/*@thymesVar id="recipe" type="com.springframework.domain.Recipe"*/-->
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-8 col-md-offset-2">
             <div class="pannel-group">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -94,10 +94,11 @@
                                 <ul>
                                     <li th:remove="all">1 Cup of milk</li>
                                     <li th:remove="all">1 Teaspoon of chocolate</li>
+                                    <!--/*@thymesVar id="ingredient" type="com.springframework.domain.Ingredient"*/-->
                                     <li th:each="ingredient : ${recipe.ingredients}"
-                                        th:text="${ ingredient.amount +
+                                        th:text="${ (ingredient.amount +
                                        ' '  + ingredient.uom.getDescription() +
-                                       ' '  + ingredient.getDescription()}">1 Teaspoon of Sugar</li>
+                                       ' '  + ingredient.description)}">1 Teaspoon of Sugar</li>
                                 </ul>
                             </div>
                         </div>
