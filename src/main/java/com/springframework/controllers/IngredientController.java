@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
 @Slf4j
 @Controller
 public class IngredientController {
@@ -20,7 +21,8 @@ public class IngredientController {
     public String listIngredients(@PathVariable Long recipeId, Model model) {
         log.debug("Getting ingredients of recipe with id: " + recipeId);
 
-        model.addAttribute(recipeService.findCommandById(recipeId).getIngredients());
+        model.addAttribute("recipe", recipeService.findCommandById(recipeId));
         return "recipe/ingredient/list";
     }
+
 }
