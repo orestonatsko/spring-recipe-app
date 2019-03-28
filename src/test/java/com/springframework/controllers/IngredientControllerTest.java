@@ -2,8 +2,11 @@ package com.springframework.controllers;
 
 import com.springframework.commands.IngredientCommand;
 import com.springframework.commands.RecipeCommand;
+import com.springframework.converters.IngredientToIngredientCommand;
+import com.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import com.springframework.services.IngredientService;
 import com.springframework.services.RecipeService;
+import com.springframework.services.UnitOfMeasureService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -25,6 +28,9 @@ public class IngredientControllerTest {
     @Mock
     private IngredientService ingredientService;
 
+    @Mock
+    private UnitOfMeasureService unitOfMeasureService;
+
     private IngredientController ingredientController;
 
     private MockMvc mockMvc;
@@ -33,7 +39,9 @@ public class IngredientControllerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        ingredientController = new IngredientController(recipeService, ingredientService);
+        IngredientToIngredientCommand ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
+
+        ingredientController = new IngredientController(recipeService, ingredientService, unitOfMeasureService);
         mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
     }
 
@@ -58,14 +66,14 @@ public class IngredientControllerTest {
         //given
         IngredientCommand recipeCommand = new IngredientCommand();
 
-        //when
         when(ingredientService.findIngredientByRecipeIdAndIngredientId(anyLong(), anyLong())).thenReturn(recipeCommand);
 
+        //then
         mockMvc.perform(get("/recipe/1/ingredients/2/show"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/ingredient/show"))
                 .andExpect(model().attributeExists("ingredient"));
-        //then
+
         verify(ingredientService, times(1))
                 .findIngredientByRecipeIdAndIngredientId(anyLong(), anyLong());
 
