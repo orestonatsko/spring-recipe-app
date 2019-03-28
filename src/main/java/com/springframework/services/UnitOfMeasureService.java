@@ -1,9 +1,9 @@
 package com.springframework.services;
 
-import com.springframework.domain.UnitOfMeasure;
+import com.springframework.commands.UnitOfMeasureCommand;
 
-import java.util.HashSet;
+import java.util.Set;
 
 public interface UnitOfMeasureService {
-    HashSet<UnitOfMeasure> findAll();
+    Set<UnitOfMeasureCommand> findAll();
 }
