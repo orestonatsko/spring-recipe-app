@@ -51,7 +51,7 @@ public class Ingredient {
     }
 
     public BigDecimal getAmount() {
-        return amount;
+        return (amount != null)? amount.stripTrailingZeros(): amount;
     }
 
     public void setAmount(BigDecimal amount) {
