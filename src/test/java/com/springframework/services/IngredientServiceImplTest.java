@@ -1,11 +1,14 @@
 package com.springframework.services;
 
 import com.springframework.commands.IngredientCommand;
+import com.springframework.converters.IngredientCommandToIngredient;
+import com.springframework.converters.IngredientCommandToUnitOfMeasure;
 import com.springframework.converters.IngredientToIngredientCommand;
 import com.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import com.springframework.domain.Ingredient;
 import com.springframework.domain.Recipe;
 import com.springframework.repository.RecipeRepository;
+import com.springframework.repository.UnitOfMeasureRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -24,12 +27,18 @@ public class IngredientServiceImplTest {
     @Mock
     private RecipeRepository recipeRepository;
 
+    @Mock
+    private UnitOfMeasureRepository unitOfMeasureRepository;
+
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
         ingredientService = new IngredientServiceImpl(recipeRepository,
-                new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand()));
+                new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand()),
+                unitOfMeasureRepository,
+                new IngredientCommandToIngredient(new IngredientCommandToUnitOfMeasure()));
     }
 
     @Test

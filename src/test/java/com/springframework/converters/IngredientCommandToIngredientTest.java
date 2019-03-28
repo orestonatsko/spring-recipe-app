@@ -21,7 +21,7 @@ public class IngredientCommandToIngredientTest {
 
     @Before
     public void setUp() throws Exception {
-        UnitOfMeasureCommandToUnitOfMeasure uomConverter = new UnitOfMeasureCommandToUnitOfMeasure();
+        IngredientCommandToUnitOfMeasure uomConverter = new IngredientCommandToUnitOfMeasure();
         converter = new IngredientCommandToIngredient(uomConverter);
     }
 

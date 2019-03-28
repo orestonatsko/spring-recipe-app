@@ -1,5 +1,6 @@
 package com.springframework.controllers;
 
+import com.springframework.commands.IngredientCommand;
 import com.springframework.services.IngredientService;
 import com.springframework.services.RecipeService;
 import com.springframework.services.UnitOfMeasureService;
@@ -7,7 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Slf4j
 @Controller
@@ -31,14 +34,14 @@ public class IngredientController {
         return "recipe/ingredient/list";
     }
 
-    @GetMapping("recipe/{recipeId}/ingredients/{ingredientId}/show")
+    @GetMapping("recipe/{recipeId}/ingredient/{ingredientId}/show")
     public String ingredientByRecipeIdAndIngredientId(@PathVariable Long recipeId, @PathVariable Long ingredientId, Model model) {
 
         model.addAttribute("ingredient", ingredientService.findIngredientByRecipeIdAndIngredientId(recipeId, ingredientId));
         return "recipe/ingredient/show";
     }
 
-    @GetMapping("recipe/{recipeId}/ingredients/{ingredientId}/update")
+    @GetMapping("recipe/{recipeId}/ingredient/{ingredientId}/update")
     public String updateRecipeIngredient(@PathVariable Long recipeId,
                                          @PathVariable Long ingredientId, Model model) {
 
@@ -46,6 +49,12 @@ public class IngredientController {
 
         model.addAttribute("uomList", unitOfMeasureService.findAll());
         return "recipe/ingredient/ingredientform";
+    }
+
+    @PostMapping("recipe/{recipeId}/ingredient")
+    public String saveOrUpdateIngredient(@ModelAttribute IngredientCommand sourceCommand, @PathVariable Long recipeId) {
+        IngredientCommand ingredientCommand = ingredientService.saveIngredientCommand(sourceCommand);
+        return "redirect:/" + ingredientCommand.getRecipeId() + "/ingredient/" + ingredientCommand.getId();
     }
 
 }

@@ -18,14 +18,14 @@ public class UnitOfMeasureCommandToUnitOfMeasureTest {
     @Mock
     UnitOfMeasureRepository unitOfMeasureRepository;
 
-    UnitOfMeasureCommandToUnitOfMeasure converter;
+    IngredientCommandToUnitOfMeasure converter;
 
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        converter = new UnitOfMeasureCommandToUnitOfMeasure();
+        converter = new IngredientCommandToUnitOfMeasure();
 
     }
 

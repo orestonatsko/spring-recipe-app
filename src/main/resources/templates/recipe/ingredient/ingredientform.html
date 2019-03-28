@@ -22,39 +22,41 @@
 <div class="container-fluid" style="margin-top: 20px; margin-bottom: 20px; margin-left: 20px;">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <form th:object="${ingredient}" th:action="${'/recipe/' + ingredient.recipeId + '/ingredients/' + ingredient.id}" method="post">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h1 class="panel-title">Update Ingredients</h1>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-3 form-group">
-                                <label>Ingredient Description:</label>
-                                <label>
-                                    <input type="text" class="form-control" th:field="*{description}">
-                                </label>
-                            </div>
-                            <div class="col-md-3 form-group">
-                                <label>Amount:</label>
-                                <label>
-                                    <input type="number" class="form-control" th:field="*{amount}">
-                                </label>
-                            </div>
-                            <div class="col-md-3 form-group">
-                                <label>UOM:</label>
-                                <select class="form-control" name="uom.id">
-                                    <option th:each="uom : ${uomList}"
-                                            th:value="${uom.id}"
-                                            th:selected="${uom.id.equals(ingredient.uom.id)}"
-                                            th:text="${uom.description}">
-                                        Each
-                                    </option>
-                                </select>
+            <form th:object="${ingredient}"
+                  th:action="${'/recipe/' + ingredient.recipeId + '/ingredients/' + ingredient.id}" method="post">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Update Ingredients</h1>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3 form-group">
+                                    <label>Ingredient Description:</label>
+                                    <label>
+                                        <input type="text" class="form-control" th:field="*{description}">
+                                    </label>
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label>Amount:</label>
+                                    <label>
+                                        <input type="number" class="form-control" th:field="*{amount}">
+                                    </label>
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label>UOM:</label>
+                                    <select class="form-control" name="uom.id">
+                                        <option th:each="uom : ${uomList}"
+                                                th:value="${uom.id}"
+                                                th:selected="${uom.id.equals(ingredient.uom.id)}"
+                                                th:text="${uom.description}">
+                                            Each
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>

@@ -31,7 +31,7 @@ public class RecipeServiceImplTest {
                 new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand()),
                 new NotesToNotesCommand());
         RecipeCommandToRecipe recipeCommandToRecipe = new RecipeCommandToRecipe(new CategoryCommandToCategory(),
-                new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure()),
+                new IngredientCommandToIngredient(new IngredientCommandToUnitOfMeasure()),
                 new NotesCommandToNotes());
         recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
