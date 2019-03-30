@@ -17,6 +17,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class IngredientServiceImplTest {
@@ -78,15 +79,22 @@ public class IngredientServiceImplTest {
         //given
         Recipe recipe = new Recipe();
         recipe.setId(RECIPE_ID);
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(INGREDIENT_ID);
+        recipe.addIngredient(ingredient);
         Optional<Recipe> optionalRecipe = Optional.of(recipe);
 
         when(recipeRepository.findById(RECIPE_ID)).thenReturn(optionalRecipe);
 
         //when
         ingredientService.deleteIngredientById(RECIPE_ID, INGREDIENT_ID);
+        Optional<Recipe> recipeWithoutIngredient = recipeRepository.findById(RECIPE_ID);
 
         //then
-        verify(recipeRepository, times(1)).findById(RECIPE_ID);
+        assertNotNull(recipeWithoutIngredient);
+        assertEquals(0, recipeWithoutIngredient.get().getIngredients().size());
+        verify(recipeRepository, times(2)).findById(anyLong());
+        verify(recipeRepository, times(1)).save(any());
 
     }
 }
