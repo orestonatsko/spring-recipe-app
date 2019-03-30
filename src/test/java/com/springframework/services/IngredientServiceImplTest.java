@@ -22,6 +22,8 @@ import static org.mockito.Mockito.*;
 public class IngredientServiceImplTest {
 
     private static final Long RECIPE_ID = 1L;
+    private static final Long INGREDIENT_ID = 8L;
+
     private IngredientService ingredientService;
 
     @Mock
@@ -69,5 +71,22 @@ public class IngredientServiceImplTest {
         assertEquals(RECIPE_ID, ingredientCommand.getRecipeId());
 
         verify(recipeRepository, times(1)).findById(anyLong());
+    }
+
+    @Test
+    public void deleteIngredientById() {
+        //given
+        Recipe recipe = new Recipe();
+        recipe.setId(RECIPE_ID);
+        Optional<Recipe> optionalRecipe = Optional.of(recipe);
+
+        when(recipeRepository.findById(RECIPE_ID)).thenReturn(optionalRecipe);
+
+        //when
+        ingredientService.deleteIngredientById(RECIPE_ID, INGREDIENT_ID);
+
+        //then
+        verify(recipeRepository, times(1)).findById(RECIPE_ID);
+
     }
 }

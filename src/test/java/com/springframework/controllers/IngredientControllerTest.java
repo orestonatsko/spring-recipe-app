@@ -21,7 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class IngredientControllerTest {
 
-    private static final Long ID = 1L;
+    private static final Long RECIPE_ID = 1L;
+    private static final Long INGREDIENT_ID = 8L;
     @Mock
     private RecipeService recipeService;
 
@@ -49,13 +50,13 @@ public class IngredientControllerTest {
     public void listIngredients() throws Exception {
         //given
         RecipeCommand recipeCommand = new RecipeCommand();
-        recipeCommand.setId(ID);
+        recipeCommand.setId(INGREDIENT_ID);
 
         //when
         when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
 
         //then
-        mockMvc.perform(get("/recipe/" + ID + "/ingredients"))
+        mockMvc.perform(get("/recipe/" + INGREDIENT_ID + "/ingredients"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/ingredient/list"))
                 .andExpect(model().attributeExists("recipe"));
@@ -76,6 +77,20 @@ public class IngredientControllerTest {
 
         verify(ingredientService, times(1))
                 .findIngredientByRecipeIdAndIngredientId(anyLong(), anyLong());
+
+    }
+
+
+    @Test
+    public void deleteIngredientById() throws Exception {
+
+
+        //when
+        mockMvc.perform(get("/recipe/" + RECIPE_ID + "/ingredient/" + INGREDIENT_ID + "/delete"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/" + RECIPE_ID + "/ingredients"));
+        //then
+        verify(ingredientService, times(1)).deleteIngredientById(RECIPE_ID, INGREDIENT_ID);
 
     }
 }
