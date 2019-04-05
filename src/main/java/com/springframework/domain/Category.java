@@ -8,18 +8,19 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "category_id", columnDefinition = "NUMERIC(19,0)")
+    private Integer id;
 
     private String description;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "categories")
     private Set<Recipe> recipes;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

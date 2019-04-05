@@ -8,14 +8,17 @@ public class Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ingredient_id", columnDefinition = "INTEGER(19,0)")
     private Long id;
     private String description;
     private BigDecimal amount;
 
     @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "uom_id", columnDefinition = "INTEGER(19,0)")
     private UnitOfMeasure uom;
 
     @ManyToOne
+    @JoinColumn(name = "recipe_id", referencedColumnName = "recipe_id", columnDefinition = "INTEGER(19,0)")
     private Recipe recipe;
 
     public Ingredient() {

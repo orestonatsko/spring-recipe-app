@@ -9,28 +9,38 @@ public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "recipe_id", columnDefinition = "INTEGER(19,0)")
     private Long id;
 
     private String description;
+    @Column(name = "prep_time")
     private Integer prepTime;
+    @Column(name = "cook_time")
     private Integer cookTime;
+    @Column(name = "servings")
     private Integer servings;
-    private String source;
-    private String url;
+//    private String source;
+//    private String url;
 
     @Lob
+    @Column(name = "direction", columnDefinition = "TEXT(1000)")
     private String directions;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients = new HashSet<>();
 
-    @Lob
-    private Byte[] image;
+//    @Lob
+//    private Byte[] image;
 
-    @Enumerated(value = EnumType.STRING)
-    private Difficulty difficulty;
+//    @Enumerated(value = EnumType.STRING)
+//    private Difficulty difficulty
+
+    @OneToOne
+    @JoinColumn(name = "difficulty_id")
+    private TableDifficulty difficulty;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "note_id")
     private Notes notes;
 
     @ManyToMany
@@ -79,21 +89,21 @@ public class Recipe {
         this.servings = servings;
     }
 
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
+//    public String getSource() {
+//        return source;
+//    }
+//
+//    public void setSource(String source) {
+//        this.source = source;
+//    }
+//
+//    public String getUrl() {
+//        return url;
+//    }
+//
+//    public void setUrl(String url) {
+//        this.url = url;
+//    }
 
     public String getDirections() {
         return directions;
@@ -103,13 +113,13 @@ public class Recipe {
         this.directions = directions;
     }
 
-    public Byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(Byte[] image) {
-        this.image = image;
-    }
+//    public Byte[] getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(Byte[] image) {
+//        this.image = image;
+//    }
 
     public Notes getNotes() {
         return notes;
@@ -118,7 +128,7 @@ public class Recipe {
     public void setNotes(Notes notes) {
         this.notes = notes;
         if (notes != null) {
-            notes.setRecipe(this);
+//            notes.setRecipe(this);
         }
     }
 
@@ -136,11 +146,19 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
-    public Difficulty getDifficulty() {
+//    public Difficulty getDifficulty() {
+//        return difficulty;
+//    }
+//
+//    public void setDifficulty(Difficulty difficulty) {
+//        this.difficulty = difficulty;
+//    }
+
+    public TableDifficulty getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(Difficulty difficulty) {
+    public void setDifficulty(TableDifficulty difficulty) {
         this.difficulty = difficulty;
     }
 
